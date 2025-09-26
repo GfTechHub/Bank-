@@ -17,3 +17,78 @@ body {
   margin-top: 0.5rem;
   font-size: 0.8rem;
 }
+
+
+
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Glass effect for cards */
+.card-glass {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+/* Shortcuts */
+.shortcut {
+  background: #111;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  width: 90px;
+  transition: transform .2s ease;
+}
+.shortcut i {
+  font-size: 1.5rem;
+  color: orange;
+}
+.shortcut p {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+}
+.shortcut:hover {
+  transform: translateY(-4px);
+}
+
+/* Feature Blocks */
+.feature-card {
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+.feature-card .feature-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+.bg-pink {
+  background: #ffccd5;
+}
+.bg-purple {
+  background: #6f42c1;
+}
+.bg-orange {
+  background: #fd7e14;
+}
+
+
+.card {
+  border-radius: 12px;
+}
+.card-body {
+  padding: 0.5rem 0.75rem;
+}
+.card-body p {
+  font-size: 0.8rem;
+}
+
+
+.card {
+  border-radius: 12px;
+}
+.card-body p {
+  font-size: 0.85rem;
+}

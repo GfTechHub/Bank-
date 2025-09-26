@@ -14,20 +14,28 @@
 
   <!-- TOP NAV -->
   <nav class="navbar navbar-dark bg-black shadow-sm">
-    <div class="container">
+    <div class="container d-flex justify-content-between align-items-center">
       <a class="navbar-brand fw-bold" href="#">
         🏦 Atlas Bank
       </a>
-      <div class="d-flex align-items-center">
-        <span class="me-3">Hello, Ezekiel!</span>
-        <img src="https://i.pravatar.cc/40" class="rounded-circle" alt="profile">
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+          <img src="https://i.pravatar.cc/40" class="rounded-circle me-2" alt="profile">
+          Ezekiel
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+          <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> Profile</a></li>
+          <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Settings</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+        </ul>
       </div>
     </div>
   </nav>
 
-  <!-- DASHBOARD -->
   <div class="container py-4">
-    <!-- Balance card -->
+
+    <!-- Balance Card -->
     <div class="card bg-black text-light p-4 mb-4 shadow-sm">
       <div class="d-flex justify-content-between align-items-center">
         <div>
@@ -47,35 +55,168 @@
       </div>
     </div>
 
+    <!-- Cards -->
+    <h5 class="mb-3">My Cards</h5>
+    <div class="row g-3 mb-4">
+      <div class="col-md-6">
+        <div class="card card-glass p-3">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Virtual Card</h6>
+              <h4 class="fw-bold">**** 5678</h4>
+            </div>
+            <i class="bi bi-credit-card fs-1 text-primary"></i>
+          </div>
+          <div class="d-flex justify-content-between mt-3 small">
+            <span>Active</span>
+            <a href="#" class="text-warning">Manage</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card card-glass p-3">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Physical Card</h6>
+              <h4 class="fw-bold">**** 9012</h4>
+            </div>
+            <i class="bi bi-credit-card-2-front fs-1 text-success"></i>
+          </div>
+          <div class="d-flex justify-content-between mt-3 small">
+            <span>Blocked</span>
+            <a href="#" class="text-warning">Unblock</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Shortcuts -->
-    <h5 class="mb-3">Shortcuts</h5>
-    <div class="d-flex gap-3 mb-4">
+    <h5 class="mb-3">Quick Actions</h5>
+    <div class="d-flex gap-3 mb-4 flex-wrap">
       <div class="shortcut"><i class="bi bi-geo-alt-fill"></i><p>Near me</p></div>
       <div class="shortcut"><i class="bi bi-wifi"></i><p>Buy data</p></div>
       <div class="shortcut"><i class="bi bi-phone"></i><p>Buy airtime</p></div>
+      <div class="shortcut"><i class="bi bi-building"></i><p>Bills</p></div>
+      <div class="shortcut"><i class="bi bi-cash"></i><p>Loans</p></div>
     </div>
 
-    <!-- Transactions -->
-    <div class="card bg-black text-light p-3 mb-4">
-      <div class="d-flex justify-content-between align-items-center">
-        <h6 class="mb-0">Transaction history</h6>
-        <a href="#" class="text-warning small">See more</a>
+    <!-- Notifications -->
+    <h5 class="mb-3">Notifications</h5>
+    <div class="list-group mb-4">
+      <div class="list-group-item bg-black text-light d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-bell-fill text-warning"></i> Your account statement is ready</span>
+        <small class="text-muted">2h ago</small>
       </div>
-      <div class="text-center text-muted py-4">
-        <i class="bi bi-clock-history fs-2"></i>
-        <p class="mb-0">No past transactions</p>
+      <div class="list-group-item bg-black text-light d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-shield-lock-fill text-success"></i> Login from new device</span>
+        <small class="text-muted">1d ago</small>
       </div>
     </div>
 
-    <!-- Investments -->
-    <h5 class="mb-3">Investments</h5>
-    <div class="card bg-black p-3">
-      <img src="https://source.unsplash.com/400x200/?investment,money" 
-           class="rounded w-100" alt="investment">
+    <!-- Analytics (Placeholder Chart) -->
+    <h5 class="mb-3">Spending Overview</h5>
+    <div class="card card-glass p-4 mb-5 text-center">
+      <i class="bi bi-pie-chart fs-1 text-warning"></i>
+      <p class="text-muted mb-0">Chart placeholder (will integrate with Chart.js)</p>
+    </div>
+
+  </div>
+  
+      <!-- Greeting -->
+    <div class="d-flex align-items-center mb-4">
+      <img src="https://i.pravatar.cc/48" class="rounded-circle me-2" alt="profile">
+      <h5 class="mb-0">Hello, Ezekiel!</h5>
+    </div>
+    
+   <!-- Investments -->
+<div class="card bg-dark text-light mb-3 shadow-sm border-0">
+  <div class="row g-0 align-items-center">
+    <div class="col-3 text-center p-3">
+      <img src="https://cdn-icons-png.flaticon.com/512/2331/2331937.png" 
+           class="img-fluid" style="max-height:45px;" alt="safe">
+    </div>
+    <div class="col-9">
+      <div class="card-body py-2">
+        <h6 class="card-title mb-1">Investments</h6>
+        <p class="card-text small mb-1">Make your money work and earn more.</p>
+        <a href="#" class="btn btn-sm btn-outline-warning">Learn more</a>
+      </div>
     </div>
   </div>
+</div>
 
-  <!-- BOTTOM NAV -->
+<!-- Pension -->
+<div class="card bg-dark text-light mb-3 shadow-sm border-0">
+  <div class="row g-0 align-items-center">
+    <div class="col-3 text-center p-3">
+      <img src="https://cdn-icons-png.flaticon.com/512/2331/2331776.png" 
+           class="img-fluid" style="max-height:45px;" alt="pension">
+    </div>
+    <div class="col-9">
+      <div class="card-body py-2">
+        <h6 class="card-title mb-1">Pension</h6>
+        <p class="card-text small mb-1">Manage your retirement funds.</p>
+        <button class="btn btn-sm btn-outline-info"><i class="bi bi-link-45deg"></i> Link account</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Don’t Miss -->
+<div class="card bg-dark text-light mb-3 shadow-sm border-0">
+  <div class="row g-0 align-items-center">
+    <div class="col-3 text-center p-3">
+      <img src="https://cdn-icons-png.flaticon.com/512/2331/2331948.png" 
+           class="img-fluid" style="max-height:45px;" alt="promo">
+    </div>
+    <div class="col-9">
+      <div class="card-body py-2">
+        <h6 class="card-title mb-1">Don’t Miss</h6>
+        <p class="card-text small mb-1">Exclusive offers and limited-time deals.</p>
+        <a href="#" class="btn btn-sm btn-outline-success">View offers</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loans -->
+<div class="card bg-dark text-light mb-3 shadow-sm border-0">
+  <div class="row g-0 align-items-center">
+    <div class="col-3 text-center p-3">
+      <img src="https://cdn-icons-png.flaticon.com/512/2331/2331785.png" 
+           class="img-fluid" style="max-height:50px;" alt="loan">
+    </div>
+    <div class="col-9">
+      <div class="card-body py-3">
+        <h6 class="card-title mb-1">Loans</h6>
+        <p class="card-text small mb-2">Quick access to personal and business loans.</p>
+        <a href="#" class="btn btn-sm btn-outline-success">Apply now</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Insurance -->
+<div class="card bg-dark text-light mb-3 shadow-sm border-0">
+  <div class="row g-0 align-items-center">
+    <div class="col-3 text-center p-3">
+      <img src="https://cdn-icons-png.flaticon.com/512/2331/2331966.png" 
+           class="img-fluid" style="max-height:50px;" alt="insurance">
+    </div>
+    <div class="col-9">
+      <div class="card-body py-3">
+        <h6 class="card-title mb-1">Insurance</h6>
+        <p class="card-text small mb-2">Protect your health, car, and property.</p>
+        <a href="#" class="btn btn-sm btn-outline-danger">Get covered</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    
+
+  <!-- Bottom Nav -->
   <nav class="navbar navbar-dark bg-black fixed-bottom border-top border-secondary">
     <div class="container d-flex justify-content-around">
       <a href="#" class="text-center nav-link text-light"><i class="bi bi-house"></i><br><small>Home</small></a>
