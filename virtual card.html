@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Virtual Card</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <style>
+    body { background:#121212; color:#fff; }
+    .back-btn { color:#fff; font-size:1.2rem; text-decoration:none; }
+    .card-shell {
+      max-width:420px; margin:22px auto; border-radius:14px; padding:20px;
+      background: linear-gradient(135deg,#7b61ff,#ff7a59); box-shadow:0 14px 40px rgba(0,0,0,.6);
+      color:#fff;
+    }
+    .chip { width:48px; height:36px; border-radius:6px; background:linear-gradient(#e6d6c0,#b28a55); }
+    .card-top { display:flex; justify-content:space-between; align-items:center; }
+    .card-number { font-family: 'Courier New', monospace; font-size:20px; letter-spacing:4px; margin:14px 0; }
+    .card-meta { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    .meta-block { font-size:12px; opacity:.95; }
+    .card-actions { margin-top:14px; display:flex; gap:8px; }
+    .btn-ghost { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.08); color:#fff; }
+    .info-box { background:#1c1c1c; padding:14px; border-radius:12px; margin-top:18px; color:#cfcfcf; }
+    .label { font-size:12px; color:#bfbfbf; }
+    .copy-btn { background:transparent; border:1px solid rgba(255,255,255,0.06); color:#fff; }
+  </style>
+</head>
+<body>
+  <div class="container py-3">
+    <div class="d-flex align-items-center mb-3">
+      <a href="index.html" class="back-btn me-3"><i class="bi bi-arrow-left"></i></a>
+      <h5 class="mb-0">Virtual Card</h5>
+    </div>
+
+    <!-- Realistic Card -->
+    <div class="card-shell">
+      <div class="card-top">
+        <div class="chip" aria-hidden></div>
+        <div style="font-weight:700">VIRTUAL</div>
+      </div>
+
+      <!-- Card number (masked by default) -->
+      <div id="cardNumber" class="card-number">**** **** **** 1234</div>
+
+      <div class="card-meta">
+        <div>
+          <div class="label">Card holder</div>
+          <div style="font-weight:600">Ezekiel Ifeoluwa Olaleye</div>
+        </div>
+        <div>
+          <div class="label">Expiry</div>
+          <div style="font-weight:600">12/27</div>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button id="toggleNumber" class="btn btn-sm btn-ghost"><i class="bi bi-eye"></i> Show</button>
+        <button id="copyNumber" class="btn btn-sm btn-ghost"><i class="bi bi-clipboard"></i> Copy</button>
+        <button id="freezeCard" class="btn btn-sm btn-ghost"><i class="bi bi-lock"></i> Freeze</button>
+      </div>
+    </div>
+
+    <!-- Details below -->
+    <div class="info-box">
+      <div class="d-flex justify-content-between align-items-start">
+        <div>
+          <div class="label">Card number</div>
+          <div id="fullNumber" style="font-family:monospace; font-size:15px; margin-top:6px">5678 1234 9876 1234</div>
+        </div>
+        <div>
+          <div class="label">CVV</div>
+          <div id="cvv" style="font-weight:600; margin-top:6px">***</div>
+        </div>
+      </div>
+
+      <hr style="border-color:rgba(255,255,255,0.04); margin:14px 0">
+
+      <div class="d-flex gap-2">
+        <button id="revealCvv" class="btn btn-sm copy-btn">Reveal CVV</button>
+        <a href="#" class="btn btn-sm copy-btn">Manage limits</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // show/hide logic
+    const toggleBtn = document.getElementById('toggleNumber');
+    const cardNumberEl = document.getElementById('cardNumber');
+    const fullNumberEl = document.getElementById('fullNumber');
+    const copyBtn = document.getElementById('copyNumber');
+    const revealCvv = document.getElementById('revealCvv');
+    const cvvEl = document.getElementById('cvv');
+
+    let visible = false;
+    toggleBtn.addEventListener('click', () => {
+      visible = !visible;
+      if (visible) {
+        cardNumberEl.textContent = fullNumberEl.textContent.replace(/\s/g,'').replace(/(\d{4})(?=\d)/g, '$1 ');
+        toggleBtn.innerHTML = '<i class="bi bi-eye-slash"></i> Hide';
+      } else {
+        cardNumberEl.textContent = '**** **** **** ' + fullNumberEl.textContent.slice(-4);
+        toggleBtn.innerHTML = '<i class="bi bi-eye"></i> Show';
+      }
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(fullNumberEl.textContent);
+        copyBtn.innerHTML = '<i class="bi bi-clipboard-check"></i> Copied';
+        setTimeout(()=> copyBtn.innerHTML = '<i class="bi bi-clipboard"></i> Copy',1500);
+      } catch(e){
+        copyBtn.innerHTML = 'Unable to copy';
+      }
+    });
+
+    revealCvv.addEventListener('click', () => {
+      if (cvvEl.textContent === '***') {
+        cvvEl.textContent = '123';
+        revealCvv.textContent = 'Hide CVV';
+      } else {
+        cvvEl.textContent = '***';
+        revealCvv.textContent = 'Reveal CVV';
+      }
+    });
+
+    // Mask initially
+    cardNumberEl.textContent = '**** **** **** ' + fullNumberEl.textContent.slice(-4);
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
