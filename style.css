@@ -92,3 +92,11 @@ body {
 .card-body p {
   font-size: 0.85rem;
 }
+
+
+/* Sticky Navbar */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1050; /* Ensure it stays above other elements */
+}
