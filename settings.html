@@ -7,10 +7,6 @@
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
   <style>
     body {
       background-color: #121212;
@@ -21,93 +17,53 @@
       border: none;
       border-radius: 10px;
       padding: 15px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
     .back-btn {
       font-size: 1.4rem;
       color: #fff;
       text-decoration: none;
     }
-    .setting-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid #2a2a2a;
-    }
-    .setting-item:last-child {
-      border-bottom: none;
-    }
-    .setting-item i {
-      color: #ff5722;
-      font-size: 1.2rem;
-      margin-right: 10px;
-    }
-    .setting-label {
-      display: flex;
-      align-items: center;
+    .logout-btn {
+      background-color: #ff5722;
+      border: none;
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      color: #fff;
+      margin-top: 15px;
     }
   </style>
 </head>
 <body>
 
-  <div class="container py-3">
-    <!-- Header -->
+  <div class="container py-4">
+    <!-- Back + Header -->
     <div class="d-flex align-items-center mb-3">
-      <a href="index.html" class="back-btn me-3">
-        <i class="bi bi-arrow-left"></i>
-      </a>
+      <a href="index.html" class="back-btn me-3"><i class="bi bi-arrow-left"></i></a>
       <h5 class="mb-0">Hello, Ezekiel!</h5>
     </div>
 
     <!-- Settings Section -->
-    <h6 class="text-muted mt-3">Settings</h6>
+    <h6 class="text-muted mb-2">Settings</h6>
     <div class="card-dark">
-      <div class="setting-item">
-        <div class="setting-label">
-          <i class="bi bi-sliders"></i>
-          <div>
-            <div>Limits</div>
-            <small class="text-muted">Overview of transaction limits</small>
-          </div>
-        </div>
-        <i class="bi bi-chevron-right"></i>
-      </div>
-
-      <div class="setting-item">
-        <div class="setting-label">
-          <i class="bi bi-toggle-on"></i>
-          <div>
-            <div>Show kobo</div>
-            <small class="text-muted">Amounts in the format 00.00</small>
-          </div>
-        </div>
+      <p><i class="bi bi-sliders"></i> Limits <br><small class="text-muted">Overview of transaction limits</small></p>
+      <hr>
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <span><i class="bi bi-toggle2-on"></i> Show kobo<br><small class="text-muted">Amounts in the format 00.00</small></span>
         <div class="form-check form-switch">
           <input class="form-check-input" type="checkbox" checked>
         </div>
       </div>
-
-      <div class="setting-item">
-        <div class="setting-label">
-          <i class="bi bi-eye-slash"></i>
-          <div>
-            <div>Incognito mode</div>
-            <small class="text-muted">Hide balance</small>
-          </div>
-        </div>
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <span><i class="bi bi-eye-slash"></i> Incognito mode<br><small class="text-muted">Hide balance</small></span>
         <div class="form-check form-switch">
           <input class="form-check-input" type="checkbox" checked>
         </div>
       </div>
-
-      <div class="setting-item">
-        <div class="setting-label">
-          <i class="bi bi-volume-up"></i>
-          <div>
-            <div>App Sounds</div>
-            <small class="text-muted">Turn on/off app sounds</small>
-          </div>
-        </div>
+      <div class="d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-volume-up"></i> App Sounds<br><small class="text-muted">Turn on/off app sounds</small></span>
         <div class="form-check form-switch">
           <input class="form-check-input" type="checkbox" checked>
         </div>
@@ -115,66 +71,57 @@
     </div>
 
     <!-- Security Section -->
-    <h6 class="text-muted mt-3">Security</h6>
+    <h6 class="text-muted mb-2">Security</h6>
     <div class="card-dark">
-      <div class="setting-item">
-        <div class="setting-label">
-          <i class="bi bi-shield-lock"></i>
-          <div>
-            <div>Confirmation method</div>
-            <small class="text-muted">Transaction PIN</small>
-          </div>
-        </div>
-        <i class="bi bi-chevron-right"></i>
-      </div>
-
-      <div class="setting-item">
-        <div class="setting-label">
-          <i class="bi bi-asterisk"></i>
-          <div>Change Transaction PIN</div>
-        </div>
-        <i class="bi bi-chevron-right"></i>
-      </div>
-
-      <div class="setting-item">
-        <div class="setting-label">
-          <i class="bi bi-lock"></i>
-          <div>Change password</div>
-        </div>
-        <i class="bi bi-chevron-right"></i>
-      </div>
-
-      <div class="setting-item">
-        <div class="setting-label">
-          <i class="bi bi-question-circle"></i>
-          <div>Reset secret question</div>
-        </div>
-        <i class="bi bi-chevron-right"></i>
-      </div>
-
-      <div class="setting-item">
-        <div class="setting-label">
-          <i class="bi bi-face"></i>
-          <div>Use Face ID <br><small class="text-muted">For password</small></div>
-        </div>
+      <p><i class="bi bi-shield-lock"></i> Confirmation method<br><small class="text-muted">Transaction PIN</small></p>
+      <hr>
+      <p><i class="bi bi-key"></i> Change Transaction PIN</p>
+      <hr>
+      <p><i class="bi bi-lock"></i> Change password</p>
+      <hr>
+      <p><i class="bi bi-question-circle"></i> Reset secret question</p>
+      <hr>
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <span><i class="bi bi-person-bounding-box"></i> Use Face ID<br><small class="text-muted">For password</small></span>
         <div class="form-check form-switch">
           <input class="form-check-input" type="checkbox" checked>
         </div>
       </div>
-
-      <div class="setting-item">
-        <div class="setting-label">
-          <i class="bi bi-face"></i>
-          <div>Use Face ID <br><small class="text-muted">For transaction PIN</small></div>
-        </div>
+      <div class="d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-person-bounding-box"></i> Use Face ID<br><small class="text-muted">For transaction PIN</small></span>
         <div class="form-check form-switch">
           <input class="form-check-input" type="checkbox">
         </div>
       </div>
     </div>
+
+    <!-- Logout Button -->
+    <button class="logout-btn" data-bs-toggle="modal" data-bs-target="#logoutModal">
+      Logout
+    </button>
   </div>
 
-  <!-- Bootstrap JS -->
+  <!-- Logout Confirmation Modal -->
+  <div class="modal fade" id="logoutModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark text-white">
+        <div class="modal-header border-0">
+          <h5 class="modal-title">Confirm Logout</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to log out?
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <a href="login.html" class="btn btn-danger">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Icons + JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
