@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Withdraw - Atlas Bank</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body class="bg-dark text-light">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark bg-black px-3">
+    <button class="btn btn-outline-light btn-sm" onclick="location.href='index.html'">
+      <i class="bi bi-arrow-left"></i> Back
+    </button>
+  </nav>
+
+  <div class="container mt-4">
+
+    <!-- Withdrawal Card -->
+    <div class="card bg-black text-light p-4 shadow-sm">
+      <h4 class="mb-3">Withdraw Funds</h4>
+
+      <!-- Available Balance -->
+      <div class="alert alert-info text-dark fw-bold">
+        Available Balance: ₦<span id="balance">1000000.40</span>
+      </div>
+
+      <form id="withdrawForm">
+        <!-- Withdrawal Method -->
+        <div class="mb-3">
+          <label class="form-label">Withdrawal Method</label>
+          <select class="form-select" id="method" required>
+            <option value="">Select Method</option>
+            <option value="bank">Bank Transfer</option>
+            <option value="cash">Cash Pickup</option>
+            <option value="wallet">Wallet Transfer</option>
+          </select>
+        </div>
+
+        <!-- Account Number -->
+        <div class="mb-3">
+          <label class="form-label">Account Number</label>
+          <input type="text" id="account" class="form-control" placeholder="Enter 10-digit account number" maxlength="10" required>
+          <small id="accountName" class="text-success fw-bold"></small>
+        </div>
+
+        <!-- Amount -->
+        <div class="mb-3">
+          <label class="form-label">Amount</label>
+          <input type="number" id="amount" class="form-control" placeholder="Enter amount" required>
+        </div>
+
+        <!-- Withdraw Button -->
+        <button type="button" class="btn btn-danger w-100" onclick="confirmWithdrawal()">Withdraw</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- PIN Modal -->
+  <div class="modal fade" id="pinModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark text-light">
+        <div class="modal-header">
+          <h5 class="modal-title">Enter PIN</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="password" id="pinInput" class="form-control" placeholder="Enter 1234">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-success" onclick="verifyPin()">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentBalance = 1000000.40; // initial balance
+
+    // Show account name when account number reaches 10 digits
+    document.getElementById('account').addEventListener('input', function () {
+      const accNum = this.value.trim();
+      const accNameField = document.getElementById('accountName');
+
+      if (accNum.length === 10) {
+        accNameField.textContent = "Account Name: John Doe"; // fake resolved name
+      } else {
+        accNameField.textContent = "";
+      }
+    });
+
+    function confirmWithdrawal() {
+      let method = document.getElementById('method').value;
+      let account = document.getElementById('account').value.trim();
+      let amount = document.getElementById('amount').value.trim();
+
+      if (!method || !account || !amount) {
+        alert("⚠️ Please fill all fields before withdrawing!");
+        return;
+      }
+
+      if (parseFloat(amount) > currentBalance) {
+        alert("⚠️ Insufficient funds!");
+        return;
+      }
+
+      let pinModal = new bootstrap.Modal(document.getElementById('pinModal'));
+      pinModal.show();
+    }
+
+    function verifyPin() {
+      let pin = document.getElementById('pinInput').value;
+      let amount = parseFloat(document.getElementById('amount').value);
+
+      if (pin === "1234") {
+        currentBalance -= amount;
+        document.getElementById('balance').textContent = currentBalance.toFixed(2);
+
+        alert("✅ Withdrawal of ₦" + amount.toFixed(2) + " successful!\nNew Balance: ₦" + currentBalance.toFixed(2));
+
+        location.href = "index.html"; // redirect back
+      } else {
+        alert("❌ Incorrect PIN. Try again.");
+      }
+    }
+  </script>
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+</body>
+</html>
