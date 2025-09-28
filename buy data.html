@@ -120,7 +120,7 @@
     function setBalance(newBal) {
       // Ensure number and store with two decimals
       const n = typeof newBal === 'number' ? newBal : parseFloat(newBal);
-      localStorage.setItem('balance', n.toFixed(2));
+      localSt!orage.setItem('balance', n.toFixed(2));
     }
 
     function pushNotification(message) {
