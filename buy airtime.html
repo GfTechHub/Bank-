@@ -4,70 +4,230 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Buy Airtime</title>
+
+  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-  <style> 
-    body { 
-      background:#121212; 
-      color:#fff; 
-    }
-    .card {
-      background: #1e1e1e;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px;
-    }
+  <style>
+    body { background:#121212; color:#fff; }
+    .card { background:#1e1e1e; border:1px solid rgba(255,255,255,0.06); border-radius:12px; }
   </style>
 </head>
 <body>
   <div class="container py-4">
 
-    <!-- Back Button -->
+    <!-- Back -->
     <a href="index.html" class="text-white text-decoration-none mb-3 d-inline-block">
       <i class="bi bi-arrow-left"></i> Back
     </a>
 
-    <!-- Page Title -->
     <h4 class="fw-bold mb-3">Buy Airtime</h4>
 
-    <!-- Airtime Card -->
     <div class="card shadow-lg p-4">
-      <form>
-        <!-- Network -->
+      <form id="airtimeForm" novalidate>
         <div class="mb-3">
           <label class="form-label">Network</label>
-          <select class="form-select">
-            <option>MTN</option>
-            <option>Glo</option>
-            <option>Airtel</option>
-            <option>9mobile</option>
+          <select id="airtimeNetwork" class="form-select" required>
+            <option value="" disabled selected>Select Network</option>
+            <option value="MTN">MTN</option>
+            <option value="Glo">Glo</option>
+            <option value="Airtel">Airtel</option>
+            <option value="9mobile">9mobile</option>
           </select>
         </div>
 
-        <!-- Phone Number -->
+        <div class="mb-3">
+          <label class="form-label">Amount (₦)</label>
+          <input type="number" id="airtimeAmount" class="form-control" placeholder="Enter amount" required min="1" step="0.01">
+        </div>
+
         <div class="mb-3">
           <label class="form-label">Phone Number</label>
-          <input type="tel" class="form-control" placeholder="Enter number">
+          <input type="tel" id="airtimePhone" class="form-control" placeholder="Enter phone (e.g. 08012345678)" required>
+          <div class="form-text text-muted">Enter 10 or 11 digits (numbers only).</div>
         </div>
 
-        <!-- Amount -->
-        <div class="mb-3">
-          <label class="form-label">Amount</label>
-          <input type="number" class="form-control" placeholder="Enter amount">
-        </div>
-
-        <!-- Pay Button -->
         <button type="submit" class="btn btn-primary w-100 fw-bold">
           <i class="bi bi-wallet2"></i> Pay Now
         </button>
       </form>
     </div>
 
-    <!-- Extra Info -->
     <div class="mt-4 text-muted small">
       <p><i class="bi bi-shield-check"></i> Secure payment guaranteed.</p>
-      <p><i class="bi bi-phone"></i> Airtime will be credited instantly.</p>
+      <p><i class="bi bi-lightning"></i> Airtime will be delivered instantly.</p>
     </div>
-
   </div>
+
+  <!-- PIN Modal -->
+  <div class="modal fade" id="pinModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title">Enter Transaction PIN</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="password" id="pinInput" maxlength="4" class="form-control text-center" placeholder="Enter 4-digit PIN">
+          <div id="pinError" class="text-danger small mt-2 d-none"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <!-- type="button" is critical so this doesn't submit forms -->
+          <button type="button" class="btn btn-success" id="confirmPinBtn">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark text-white text-center p-4">
+        <i class="bi bi-check-circle-fill text-success fs-1 mb-3"></i>
+        <h5>Airtime Purchase Successful</h5>
+        <p id="successText" class="mb-3"></p>
+        <button class="btn btn-success w-100" id="successOkBtn">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // ---------- LocalStorage helpers (fallback if no global bank script) ----------
+    (function initStorage() {
+      if (!localStorage.getItem('balance')) localStorage.setItem('balance', '1000000.40');
+      if (!localStorage.getItem('notifications')) localStorage.setItem('notifications', JSON.stringify([]));
+    })();
+
+    function getBalance() {
+      return parseFloat(localStorage.getItem('balance') || '0');
+    }
+    function setBalance(n) {
+      const v = (typeof n === 'number') ? n : parseFloat(n);
+      localStorage.setItem('balance', v.toFixed(2));
+    }
+    function pushNotification(msg) {
+      const notes = JSON.parse(localStorage.getItem('notifications') || '[]');
+      notes.unshift(`${msg} • ${new Date().toLocaleString()}`);
+      localStorage.setItem('notifications', JSON.stringify(notes));
+    }
+
+    // fallback performer (used only if no global buyAirtime exists)
+    function performBuyAirtime(amount, network, phone) {
+      const bal = getBalance();
+      setBalance(bal - amount);
+      pushNotification(`${network} airtime ₦${amount.toFixed(2)} for ${phone} successful ✅`);
+    }
+
+    // ---------- Page logic ----------
+    const airtimeForm = document.getElementById('airtimeForm');
+    const pinModalEl = document.getElementById('pinModal');
+    const pinModal = new bootstrap.Modal(pinModalEl);
+    const successModalEl = document.getElementById('successModal');
+    const successModal = new bootstrap.Modal(successModalEl);
+
+    const pinInput = document.getElementById('pinInput');
+    const pinError = document.getElementById('pinError');
+    const confirmPinBtn = document.getElementById('confirmPinBtn');
+    const successText = document.getElementById('successText');
+    const successOkBtn = document.getElementById('successOkBtn');
+
+    let pending = { network: null, amount: 0, phone: null };
+
+    function validPhone(p) {
+      return /^[0-9]{10,11}$/.test(p);
+    }
+
+    airtimeForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      pinError.classList.add('d-none');
+
+      const network = document.getElementById('airtimeNetwork').value;
+      const amount = parseFloat(document.getElementById('airtimeAmount').value);
+      const phone = document.getElementById('airtimePhone').value.trim();
+
+      if (!network) {
+        alert('Please select a network.');
+        return;
+      }
+      if (!amount || Number.isNaN(amount) || amount <= 0) {
+        alert('Please enter a valid amount.');
+        return;
+      }
+      if (!validPhone(phone)) {
+        alert('Please enter a valid phone number (10 or 11 digits).');
+        return;
+      }
+
+      // check balance
+      if (amount > getBalance()) {
+        alert('Insufficient balance for this purchase.');
+        return;
+      }
+
+      // store pending details for PIN confirmation
+      pending = { network, amount, phone };
+
+      // open PIN modal
+      pinModal.show();
+      setTimeout(() => pinInput.focus(), 200);
+    });
+
+    confirmPinBtn.addEventListener('click', () => {
+      pinError.classList.add('d-none');
+      const pin = pinInput.value.trim();
+
+      if (pin.length === 0) {
+        pinError.textContent = 'Please enter your PIN.';
+        pinError.classList.remove('d-none');
+        return;
+      }
+
+      if (pin !== '1234') {
+        pinError.textContent = 'Incorrect PIN. Try again.';
+        pinError.classList.remove('d-none');
+        return;
+      }
+
+      // PIN correct — perform purchase
+      // If a global buyAirtime function exists (from your main script), call it.
+      // Otherwise use local fallback.
+      const { network, amount, phone } = pending;
+      if (typeof window.buyAirtime === 'function') {
+        // assume global function handles balance & notifications; call it
+        try {
+          window.buyAirtime(amount, network);
+        } catch (err) {
+          // fallback if global throws
+          performBuyAirtime(amount, network, phone);
+        }
+      } else {
+        performBuyAirtime(amount, network, phone);
+      }
+
+      // cleanup & show success
+      pinInput.value = '';
+      pinModal.hide();
+
+      successText.textContent = `${network} airtime ₦${amount.toFixed(2)} for ${phone} was purchased successfully.`;
+      successModal.show();
+    });
+
+    // redirect and/or update after success
+    successOkBtn.addEventListener('click', () => {
+      successModal.hide();
+      // go back to dashboard so updated balance & notifications show
+      window.location.href = 'index.html';
+    });
+
+    // clear errors when modal closes
+    pinModalEl.addEventListener('hidden.bs.modal', () => {
+      pinError.classList.add('d-none');
+      pinInput.value = '';
+    });
+  </script>
 </body>
 </html>
